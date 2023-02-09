@@ -8,8 +8,8 @@ user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTM
 opts.add_argument('user-agent='+user_agent)
 
 browser = webdriver.Chrome(options=opts)
-email = 'umambekov@gmail.com'
-password = 'Aiba19082008aiba'
+email = 'email'
+password = 'password'
 
 browser.get('https://www.ts.kg/')
 check_useragent = browser.execute_script('return navigator.userAgent')
