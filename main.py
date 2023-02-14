@@ -1,31 +1,33 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By 
-from selenium.webdriver.chrome.options import Options
-import time
+import undetected_chromedriver as uc
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from time import sleep
 
-opts = Options()
-user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
-opts.add_argument('user-agent='+user_agent)
+email = '@@@@@@@@@@@@@@@@'
+password = '############'
 
-browser = webdriver.Chrome(options=opts)
-email = 'email'
-password = 'password'
 
-browser.get('https://www.ts.kg/')
-check_useragent = browser.execute_script('return navigator.userAgent')
-# browser.save_screenshot('2.png')
+driver = uc.Chrome()
+wait = WebDriverWait(driver, 20)
+driver.get('https://accounts.google.com/v3/signin/identifier?dsh=S84008425%3A1676387120552879&continue=https%3A%2F%2Fwww.google.com%3Fhl%3Dru&ec=GAlA8wE&hl=ru&flowName=GlifWebSignIn&flowEntry=AddSession')
 
-elem = browser.find_element(By.XPATH, '//*[@id="mobile-navbar-collapse"]/ul[2]/li[5]').click()
-google = browser.find_element(By.XPATH, '//*[@id="mobile-navbar-collapse"]/ul[2]/li[5]/ul/li[3]/a').click()
 
-input_email = browser.find_element(By.NAME, 'identifier').send_keys(email) 
-next = browser.find_element(By.XPATH, '//*[@id="identifierNext"]/div/button').click()
+wait.until(EC.visibility_of_element_located((By.NAME, 'identifier'))).send_keys(email)
+EmailNext = driver.find_element(By.XPATH, '//*[@id="identifierNext"]/div/button').click()
 
-other = browser.find_element(By.ID, 'view_container').click()
-other_click = browser.find_element(By.XPATH, '//*[@id="view_container"]/div/div/div[2]/div/div[1]/div/form/span/section/div/div/div/ul/li[2]/div')
+wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="password"]/div[1]/div/div[1]/input'))).send_keys(password)
+PasswdNext = driver.find_element(By.XPATH, '//*[@id="passwordNext"]/div/button').click()
 
-input_password = browser.find_element(By.NAME, 'password').send_keys(password)
-password_click = browser.find_element(By.ID, 'passwordNext')
+driver.get('http://www.ts.kg/')
+
+driver.find_element(By.XPATH, '//*[@id="mobile-navbar-collapse"]/ul[2]/li[5]').click()
+driver.find_element(By.XPATH, '//*[@id="mobile-navbar-collapse"]/ul[2]/li[5]/ul/li[3]/a').click()
+
+driver.find_element(By.XPATH, '//*[@id="mobile-navbar-collapse"]/ul[2]/li[5]/div/input').send_keys('The last of us')
+
+sleep(100)
 
 # time.sleep(50)
 # browser.quit()
